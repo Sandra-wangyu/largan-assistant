@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>大立美&立刻美 收益計算小幫手</title>
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #f7f7f9;
+      color: #333;
+      line-height: 1.6;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+    }
+    
+    h1 {
+      color: #d32f2f;
+      text-align: center;
+      margin-bottom: 3rem;
+      font-size: 2rem;
+    }
+    
+    .calculator-section {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    
+    .calculator-section h2 {
+      color: #d32f2f;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+    
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      transition: border-color 0.3s;
+      box-sizing: border-box;
+    }
+    
+    .input-group input:focus {
+      outline: none;
+      border-color: #d32f2f;
+    }
+    
+    .result {
+      background: linear-gradient(135deg, #f8f9fa, #fff);
+      border: 2px solid #e9ecef;
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    
+    .result h3 {
+      color: #d32f2f;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+    
+    .amount {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #d32f2f;
+      margin: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .amount {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>大立美&立刻美 收益計算小幫手</h1>
+
+  <!-- 立刻美計算器 -->
+  <div class="calculator-section">
+    <h2>💎 僅上架立刻美平台</h2>
+    <div class="input-group">
+      <label for="directOrderAmount">訂單金額 (NT$)</label>
+      <input type="number" id="directOrderAmount" placeholder="請輸入訂單金額" min="0" step="1" value="1000">
+    </div>
+    
+    <div class="result">
+      <h3>店家實得收益</h3>
+      <div class="amount" id="directMerchantProfit">$857</div>
+    </div>
+  </div>
+
+  <!-- 經大立美推廣計算器 -->
+  <div class="calculator-section">
+    <h2>🚀 同時上架立刻美和大立美平台</h2>
+    <div class="input-group">
+      <label for="promotedOrderAmount">訂單金額 (NT$)</label>
+      <input type="number" id="promotedOrderAmount" placeholder="請輸入訂單金額" min="0" step="1" value="1000">
+    </div>
+    
+    <div class="result">
+      <h3>店家實得收益</h3>
+      <div class="amount" id="promotedMerchantProfit">$619</div>
+    </div>
+  </div>
+
+  <script>
+    function calculateDirectProfit() {
+      const orderAmount = parseFloat(document.getElementById('directOrderAmount').value) || 0;
+      
+      // 立刻美計算：訂單金額(含稅) ÷ 1.05(還原稅前) × 0.9(店家實得90%)
+      const merchantProfit = orderAmount / 1.05 * 0.9;
+      
+      document.getElementById('directMerchantProfit').textContent = `${Math.round(merchantProfit).toLocaleString()}`;
+    }
+    
+    function calculatePromotedProfit() {
+      const orderAmount = parseFloat(document.getElementById('promotedOrderAmount').value) || 0;
+      
+      // 經大立美推廣計算：訂單金額(含稅) ÷ 1.05(還原稅前) × 0.65(店家實得65%)
+      const merchantProfit = orderAmount / 1.05 * 0.65;
+      
+      document.getElementById('promotedMerchantProfit').textContent = `${Math.round(merchantProfit).toLocaleString()}`;
+    }
+    
+    // 監聽輸入變化，即時計算
+    document.getElementById('directOrderAmount').addEventListener('input', calculateDirectProfit);
+    document.getElementById('promotedOrderAmount').addEventListener('input', calculatePromotedProfit);
+    
+    // 頁面載入時執行計算
+    window.addEventListener('load', function() {
+      calculateDirectProfit();
+      calculatePromotedProfit();
+    });
+  </script>
+</body>
+</html>
